@@ -1,0 +1,92 @@
+create database lista_bim2;
+use database lista_bim2;
+
+
+CREATE TABLE Livros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255),
+    autor VARCHAR(255),
+    ano_publicacao INT,
+    disponivel BOOLEAN,
+    categoria VARCHAR(100),
+    isbn VARCHAR(20),
+    editora VARCHAR(100),
+    quantidade_paginas INT,
+    idioma VARCHAR(50)
+);
+insert into Livros (titulo, autor, ano_publicacao, disponivel, categoria, isbn, editora, quantidade_paginas, idioma)
+VALUES  ('As Crônicas de Nárnia', 'C.S. Lewis','1950', 'Fantasia', '978-0064471190','HarperCollins', '768', 'Francês');
+
+insert into Livros (titulo, autor, ano_publicacao, disponivel, categoria, isbn, editora, quantidade_paginas, idioma)
+VALUES ('Cem Anos de Solidão', 'Gabriel Garcia Marquez', '1967', TRUE, 'Ficção', '978-0241968581', 'Penguin Books', '422', 'Espanhol'),
+('Harry Potter e a Pedra Filosofal', 'J.K. Rowling', '1997', TRUE, 'Fantasia', '978-0439708180', 'Bloomsbury', '309', 'Inglês'),
+('O Senhor dos Anéis: A Sociedade do Anel', 'J.R.R. Tolkien', '1954', TRUE, 'Fantasia', '978-0618640157', 'HarperCollins', '423', 'Inglês');
+
+
+update livros
+SET disponivel = FALSE
+WHERE ano_publicacao <= 2000;
+
+update livros
+SET editora = 'Plume Books'
+WHERE titulo = '1984';
+
+update livros
+SET idioma = 'Inglês'
+WHERE editora = 'Penguin Books';
+
+update livros
+SET titulo = 'Harry Potter e a Pedra Filosofal (Edição Especial)'
+WHERE ISBN = '978-0439708180';
+
+Delete from livros WHERE categoria = 'Terror';
+
+
+Delete from livros WHERE idioma = 'Francês' AND ano_publicacao < 1970;
+
+Delete from livros WHERE titulo = 'As Crônicas de Nárnia';
+
+Delete from livros WHERE editora = 'Penguin Books';
+
+Select categoria
+From livros
+Where quantidade_paginas > '500';
+
+
+Select categoria, Count (categoria) quantidade
+From livros
+Group By categoria;
+
+
+Select categoria, Count (categoria) quantidade
+From livros
+Group By categoria;
+
+
+ Select categoria, Sum(quantidade_paginas), Sum(quantidade_paginas)/Count(quantidade_paginas) From livros
+ Where categoria = 'drama';
+
+
+Select avg (ano_publicacao)
+From livros
+Where disponivel = TRUE;
+
+
+SELECT * FROM livros WHERE ano_publicacao = (SELECT MAX(ano_publicacao) FROM livros);
+SELECT * FROM livros WHERE ano_publicacao = (SELECT MIN(ano_publicacao) FROM livros);
+
+
+SELECT * 
+FROM livros 
+ORDER BY ano_publicacao DESC;
+
+
+SELECT titulo FROM livros WHERE idioma = 'inglês'
+UNION
+SELECT titulo
+FROM livros
+WHERE idioma = 'português';
+
+Select *
+FROM livros
+WHERE autor = 'George Orwell';
